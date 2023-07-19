@@ -47,4 +47,8 @@ return require('packer').startup(function(use)
 	}
 
   use "simrat39/rust-tools.nvim"
+  use {
+    'junegunn/fzf.vim',
+    requires = { 'junegunn/fzf', run = ':call fzf#install()' }
+ }
 end)

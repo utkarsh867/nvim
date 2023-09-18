@@ -1,4 +1,4 @@
---, Only required if you have packer configured as `opt`
+--loclist, Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
@@ -6,7 +6,6 @@ return require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
 	use {
 		'nvim-telescope/telescope.nvim', tag = '0.1.1',
-		-- or                            , branch = '0.1.x',
 		requires = { {'nvim-lua/plenary.nvim'} }
 	}
 
@@ -18,10 +17,23 @@ return require('packer').startup(function(use)
 		'nvim-treesitter/nvim-treesitter',
 		run = ':TSUpdate'
 	}
-
+  use("nvim-treesitter/nvim-treesitter-context");
 	use 'nvim-treesitter/playground'
 	use 'mbbill/undotree'
 	use 'tpope/vim-fugitive'
+  
+  use({
+    'folke/trouble.nvim',
+    requires = {
+      {'nvim-tree/nvim-web-devicons'}
+    },
+    config = function()
+      require("trouble").setup {
+        icons = false,
+        mode = "document_diagnostics"
+      }
+    end
+  })
 
 	use {
 		'VonHeikemen/lsp-zero.nvim',
@@ -45,10 +57,4 @@ return require('packer').startup(function(use)
 			{'rafamadriz/friendly-snippets'}, -- Optional
 		}
 	}
-
-  use "simrat39/rust-tools.nvim"
-  use {
-    'junegunn/fzf.vim',
-    requires = { 'junegunn/fzf', run = ':call fzf#install()' }
- }
 end)

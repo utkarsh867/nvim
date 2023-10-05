@@ -1,5 +1,6 @@
 --loclist, Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
+local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 return require('packer').startup(function(use)
 	-- Packer can manage itself
@@ -8,11 +9,9 @@ return require('packer').startup(function(use)
 		'nvim-telescope/telescope.nvim', tag = '0.1.1',
 		requires = { {'nvim-lua/plenary.nvim'} }
 	}
-
 	use({ 'rose-pine/neovim', as = 'rose-pine', config = function()
 		vim.cmd('colorscheme rose-pine')
 	end})
-
 	use {
 		'nvim-treesitter/nvim-treesitter',
 		run = ':TSUpdate'
@@ -21,7 +20,6 @@ return require('packer').startup(function(use)
 	use 'nvim-treesitter/playground'
 	use 'mbbill/undotree'
 	use 'tpope/vim-fugitive'
-  
   use({
     'folke/trouble.nvim',
     requires = {
@@ -34,7 +32,30 @@ return require('packer').startup(function(use)
       }
     end
   })
-
+  use({
+    "jose-elias-alvarez/null-ls.nvim",
+    config = function()
+      require("null-ls").setup({
+        sources = {
+          require("null-ls").builtins.formatting.prettier,
+          require("null-ls").builtins.formatting.rustfmt,
+        },
+        on_attach = function(client, bufnr)
+          if client.supports_method("textDocument/formatting") then
+            vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+            vim.api.nvim_create_autocmd("BufWritePre", {
+              group = augroup,
+              buffer = bufnr,
+              callback = function()
+                vim.lsp.buf.format({async = false})
+              end,
+            })
+          end
+        end,
+      })
+    end,
+    requires = { "nvim-lua/plenary.nvim" },
+  })
 	use {
 		'VonHeikemen/lsp-zero.nvim',
 		branch = 'v1.x',

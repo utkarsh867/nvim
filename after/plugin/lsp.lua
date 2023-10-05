@@ -19,8 +19,19 @@ lsp.set_preferences({
     }
 })
 
-lsp.on_attach(function(client, bufnr)
+local arduino_language_server_capabilities = vim.lsp.protocol.make_client_capabilities()
+arduino_language_server_capabilities.textDocument.semanticTokens = vim.NIL
+arduino_language_server_capabilities.workspace.semanticTokens = vim.NIL
 
+lsp.configure('arduino_language_server', {
+  cmd = {
+    "arduino-language-server",
+    "--cli-config", "/Users/utkarsh/Library/Arduino15/arduino-cli.yaml"
+  },
+  capabilities = arduino_language_server_capabilities
+})
+
+lsp.on_attach(function(client, bufnr)
   local opts = {buffer = bufnr, remap = false}
 
   vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)

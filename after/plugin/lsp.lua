@@ -1,10 +1,9 @@
 local lsp = require('lsp-zero')
+local lsp_configurations = require('lspconfig.configs')
 
 lsp.preset("recommended")
 
 lsp.ensure_installed({
-  'eslint',
-  'tsserver',
   'rust_analyzer'
 })
 
@@ -19,17 +18,7 @@ lsp.set_preferences({
     }
 })
 
-local arduino_language_server_capabilities = vim.lsp.protocol.make_client_capabilities()
-arduino_language_server_capabilities.textDocument.semanticTokens = vim.NIL
-arduino_language_server_capabilities.workspace.semanticTokens = vim.NIL
-
-lsp.configure('arduino_language_server', {
-  cmd = {
-    "arduino-language-server",
-    "--cli-config", "/Users/utkarsh/Library/Arduino15/arduino-cli.yaml"
-  },
-  capabilities = arduino_language_server_capabilities
-})
+require('lspconfig').clangd.setup{}
 
 lsp.on_attach(function(client, bufnr)
   local opts = {buffer = bufnr, remap = false}

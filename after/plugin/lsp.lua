@@ -1,3 +1,5 @@
+vim.filetype.add({ extension = { templ = "templ" } })
+
 local lsp = require('lsp-zero')
 local lsp_configurations = require('lspconfig.configs')
 
@@ -18,7 +20,26 @@ lsp.set_preferences({
     }
 })
 
-require('lspconfig').clangd.setup{}
+require('lspconfig').ccls.setup({
+  init_options = {
+    compilationDatabaseDirectory = "build";
+    index = {
+      threads = 0;
+    };
+    clang = {
+      excludeArgs = { "-frounding-math"} ;
+    };
+  }
+})
+
+require('lspconfig').html.setup({
+  filetypes = { "html", "templ"},
+})
+
+require('lspconfig').tailwindcss.setup({
+    filetypes = { "templ", "astro", "javascript", "typescript", "react" },
+    init_options = { userLanguages = { templ = "html" } },
+})
 
 lsp.on_attach(function(client, bufnr)
   local opts = {buffer = bufnr, remap = false}

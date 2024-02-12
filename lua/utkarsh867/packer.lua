@@ -89,4 +89,10 @@ return require('packer').startup(function(use)
       require('Comment').setup()
     end
   }
+  -- remote highlights after search :noh
+  use 'jesseleite/vim-noh'
+  use {
+    "nvim-telescope/telescope-file-browser.nvim",
+    requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+  }
 end)

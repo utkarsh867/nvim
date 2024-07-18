@@ -42,6 +42,8 @@ return require('packer').startup(function(use)
         sources = {
           require("null-ls").builtins.formatting.prettier,
           require("null-ls").builtins.formatting.rustfmt,
+          require("null-ls").builtins.formatting.black,
+          require("null-ls").builtins.formatting.isort
         },
         on_attach = function(client, bufnr)
           if client.supports_method("textDocument/formatting") then

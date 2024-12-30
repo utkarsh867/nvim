@@ -54,6 +54,8 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("n", "<leader>[d", function() vim.diagnostic.goto_next() end, opts)
   vim.keymap.set("n", "<leade>]d", function() vim.diagnostic.goto_prev() end, opts)
   vim.keymap.set("n", "<leader>dl", function() vim.diagnostic.setloclist() end, opts)
+
+  vim.keymap.set("n", "<leader>ff", function () vim.lsp.buf.format() end, opts)
 end)
 
 lsp.setup()

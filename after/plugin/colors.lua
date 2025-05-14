@@ -14,6 +14,10 @@
 
 require("catppuccin").setup({
   flavour = "auto",
+  background = {
+    light = "latte",
+    dark = "mocha"
+  },
   integrations = {
     cmp = true,
     gitsigns = true,
@@ -36,4 +40,5 @@ vim.keymap.set("n", "<leader>cl", function()
     vim.o.background = "light"
   end
 end)
+
 vim.cmd.colorscheme("catppuccin")

@@ -1,11 +1,6 @@
 require('mason').setup({})
 require('mason-lspconfig').setup({
   ensure_installed = { 'lua_ls', 'rust_analyzer' },
-  handlers = {
-    function(server_name)
-      vim.lsp.enable(server_name)
-    end,
-  },
 })
 
 vim.lsp.config('terraformls', {
@@ -72,7 +67,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         buffer = event.buf,
         callback = function()
           vim.lsp.buf.format({ bufnr = event.buf, id = client.id })
-          vim.diagnostic.enable(event.buf)
+          vim.diagnostic.enable(true)
         end,
       })
     end

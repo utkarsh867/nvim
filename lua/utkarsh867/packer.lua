@@ -15,13 +15,14 @@ return require('packer').startup(function(use)
   -- 	vim.cmd('colorscheme rose-pine')
   -- end})
   use { "catppuccin/nvim", as = "catppuccin" }
-  use {
-    'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate'
-  }
-  use("nvim-treesitter/nvim-treesitter-context");
-  use 'nvim-treesitter/playground'
-  use 'mbbill/undotree'
+  -- use {
+  --   'nvim-treesitter/nvim-treesitter',
+  --   branch = "main",
+  --   lazy = false,
+  --   run = ':TSUpdate'
+  -- }
+  -- use("nvim-treesitter/nvim-treesitter-context");
+  -- use 'mbbill/undotree'
   use 'tpope/vim-fugitive'
   use 'lewis6991/gitsigns.nvim'
   use({

@@ -5,6 +5,14 @@ return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
   use {
+    "romus204/tree-sitter-manager.nvim",
+    config = function()
+      require("tree-sitter-manager").setup({
+        auto_install = true,
+      })
+    end,
+  }
+  use {
     'nvim-telescope/telescope.nvim', tag = '0.1.6',
     requires = {
       { 'nvim-lua/plenary.nvim' },
